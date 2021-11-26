@@ -5,7 +5,7 @@ uninstall:
 	pip uninstall hexlet-code
 
 gendiff:
-	poetry run gendiff --h
+	poetry run gendiff -h
 
 build:
 	poetry build
@@ -18,3 +18,5 @@ package-install:
 
 lint:
 	poetry run flake8 gendiff
+
+.PHONY: gendiff
