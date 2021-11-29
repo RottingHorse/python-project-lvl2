@@ -14,7 +14,7 @@ jobs:
           make install
       - name: Run tests
         run: |
-          poetry run pytest
+          make test
       - name: Test coverage
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
