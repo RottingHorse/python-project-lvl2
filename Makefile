@@ -19,4 +19,11 @@ package-install:
 lint:
 	poetry run flake8 gendiff
 
-.PHONY: gendiff
+test:
+	poetry run coverage run --source=gendiff -m pytest tests
+
+test-coverage:
+	poetry run coverage xml
+
+
+.PHONY: gendiff test

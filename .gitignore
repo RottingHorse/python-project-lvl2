@@ -9,3 +9,7 @@ dist
 __pycache__
 
 *.json
+
+coverage.xml
+
+.coverage
