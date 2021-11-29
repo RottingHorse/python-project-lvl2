@@ -12,9 +12,9 @@ jobs:
         run: |
           pip install poetry
           make install
+          make lint
       - name: Run tests
-        run: |
-          make test
+        run: make test
       - name: Test coverage
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
