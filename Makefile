@@ -20,10 +20,10 @@ lint:
 	poetry run flake8 gendiff
 
 test:
-	poetry run coverage run --source=gendiff -m pytest tests
+	poetry run pytest
 
 test-coverage:
-	poetry run coverage xml
+	poetry run pytest --cov=gendiff --cov-report xml
 
 
 .PHONY: gendiff test
