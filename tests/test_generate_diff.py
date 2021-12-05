@@ -11,3 +11,7 @@ def get_correct():
 
 def test_gendiff_plane_json(correct):
     assert generate_diff("tests/fixtures/test1.json", "tests/fixtures/test2.json") == correct
+
+
+def test_gendiff_plane_yaml(correct):
+    assert generate_diff("tests/fixtures/test1.yaml", "tests/fixtures/test2.yaml") == correct

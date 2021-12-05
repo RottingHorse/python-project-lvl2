@@ -1,4 +1,4 @@
-import json
+from gendiff.parser import parse_file
 
 
 def _check_diffs(all_keys, file1, file2):
@@ -21,8 +21,8 @@ def _check_diffs(all_keys, file1, file2):
 
 
 def generate_diff(file_path1, file_path2):
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
+    file1 = parse_file(file_path1)
+    file2 = parse_file(file_path2)
 
     all_keys = set()
 

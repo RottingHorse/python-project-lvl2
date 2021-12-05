@@ -1,9 +1,9 @@
 {
-- key1: value1
+- key1: true
 - key2: value2
-  key3: value3
-- key4: value4
-+ key4: value44
-+ key5: value5
-+ key6: value6
+  key3: 333
+- key4: 454
++ key4: 44
++ key5: 123.32.34.5
++ key6: false
 }
