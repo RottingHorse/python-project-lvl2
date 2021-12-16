@@ -1,4 +1,4 @@
-key1: true
-key2: value2
-key3: 333
-key4: 454
+host: hexlet.io
+timeout: 50
+proxy: 123.234.53.22
+follow: false
