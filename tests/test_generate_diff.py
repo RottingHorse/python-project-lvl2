@@ -4,7 +4,7 @@ from gendiff import generate_diff
 
 
 @pytest.fixture(name="correct_plane")
-def get_correct_plain():
+def get_correct_plane():
     with open("tests/fixtures/diff_plane.txt") as file:
         correct_plane = file.read()
     return correct_plane
@@ -12,7 +12,7 @@ def get_correct_plain():
 
 @pytest.fixture(name="correct_recursive")
 def get_correct_recursive():
-    with open("tests/fixtures/diff_plane.txt") as file:
+    with open("tests/fixtures/diff_recursive.txt") as file:
         correct_recursive = file.read()
     return correct_recursive
 
