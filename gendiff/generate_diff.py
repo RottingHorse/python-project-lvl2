@@ -1,6 +1,6 @@
 from typing import Dict
 
-from gendiff.constants import ADDED, REMOVED, NESTED, UNCHANGED, CHANGED
+from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
 from gendiff.formatters.stylish_formatter import format_diff
 from gendiff.parser import parse_file
 
