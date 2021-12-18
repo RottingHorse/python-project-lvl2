@@ -1,13 +1,15 @@
 from typing import Dict
 
 from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
+from gendiff.formatters.plain_formatter import format_diff_plain
 from gendiff.formatters.stylish_formatter import format_diff
 from gendiff.parser import parse_file
 
 
 def _get_formatter(fmt: str):
     formatters = {
-        "stylish": format_diff
+        "stylish": format_diff,
+        "plain": format_diff_plain
     }
     return formatters.get(fmt)
 

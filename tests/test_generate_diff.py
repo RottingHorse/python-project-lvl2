@@ -17,6 +17,13 @@ def get_correct_recursive():
     return correct_recursive
 
 
+@pytest.fixture(name="correct_nested_plain")
+def get_correct_nested_plain():
+    with open("tests/fixtures/diff_nested_plain.txt") as file:
+        correct_nested_plain = file.read()
+    return correct_nested_plain
+
+
 def test_gendiff_plane_json(correct_plane):
     assert generate_diff("tests/fixtures/test_plane1.json", "tests/fixtures/test_plane2.json") == correct_plane
 
@@ -33,3 +40,13 @@ def test_gendiff_recursive_yaml(correct_recursive):
 def test_gendiff_recursive_json(correct_recursive):
     assert generate_diff("tests/fixtures/test_recursive1.json",
                          "tests/fixtures/test_recursive2.json") == correct_recursive
+
+
+def test_gendiff_nested_json_plain(correct_nested_plain):
+    assert generate_diff("tests/fixtures/test_recursive1.json",
+                         "tests/fixtures/test_recursive2.json") == correct_nested_plain
+
+
+def test_gendiff_nested_yaml_plain(correct_nested_plain):
+    assert generate_diff("tests/fixtures/test_recursive1.yaml",
+                         "tests/fixtures/test_recursive2.yaml") == correct_nested_plain
