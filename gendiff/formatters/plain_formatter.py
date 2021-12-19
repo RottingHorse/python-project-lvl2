@@ -12,11 +12,13 @@ options = {
 def _normalize_value(value):
     if isinstance(value, Dict):
         return COMPLEX
+    elif isinstance(value, str):
+        return f"'{value}'"
     elif value is None:
         return "null"
     elif isinstance(value, bool):
         return str(value).lower()
-    return f"'{value}'"
+    return value
 
 
 def _format_diff_plain(diff_dict, parent):
