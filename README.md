@@ -57,4 +57,4 @@ print(diff)
 [![asciicast](https://asciinema.org/a/457175.svg)](https://asciinema.org/a/457175)
 
 ### questions and suggestions:
-[Email me :)](minichev.s.l@gmail.com)
+<minichev.s.l@gmail.com>
