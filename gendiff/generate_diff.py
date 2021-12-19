@@ -1,6 +1,7 @@
 from typing import Dict
 
 from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
+from gendiff.formatters.json_formatter import format_diff_json
 from gendiff.formatters.plain_formatter import format_diff_plain
 from gendiff.formatters.stylish_formatter import format_diff
 from gendiff.parser import parse_file
@@ -9,7 +10,8 @@ from gendiff.parser import parse_file
 def _get_formatter(fmt: str):
     formatters = {
         "stylish": format_diff,
-        "plain": format_diff_plain
+        "plain": format_diff_plain,
+        "json": format_diff_json,
     }
     return formatters.get(fmt)
 
