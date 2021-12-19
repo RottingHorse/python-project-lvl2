@@ -1,7 +1,6 @@
 from typing import Dict
 
-from gendiff.constants import (ADDED, REMOVED, CHANGED, NESTED, UNCHANGED,
-                               COMPLEX)
+from gendiff.constants import ADDED, CHANGED, COMPLEX, NESTED, REMOVED
 
 options = {
     ADDED: "Property '{n}' was added with value: {v}".format,
@@ -29,8 +28,6 @@ def _format_diff_plain(diff_dict, parent):
         diff = diffs.get("diff")
         if status == NESTED:
             strings.append(_format_diff_plain(diff, prop_name))
-        elif status == UNCHANGED:
-            pass
         elif status == CHANGED:
             old_value = diff.get("old_value")
             new_value = diff.get("new_value")
@@ -40,7 +37,7 @@ def _format_diff_plain(diff_dict, parent):
         elif status == ADDED:
             strings.append(
                 options[status](n=prop_name, v=_normalize_value(diff)))
-        else:
+        elif status == REMOVED:
             strings.append(options[status](n=prop_name))
     return "\n".join(strings)
 
