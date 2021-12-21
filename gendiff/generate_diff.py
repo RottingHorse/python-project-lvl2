@@ -1,58 +1,37 @@
-from typing import Dict
+from typing import Dict, List
 
 from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
-from gendiff.formatters.json_formatter import format_diff_json
-from gendiff.formatters.plain_formatter import format_diff_plain
-from gendiff.formatters.stylish_formatter import format_diff
-from gendiff.parser import parse_file
+from gendiff.formatters.get_formatter import get_formatter
+from gendiff.parsers.filereader import parse_file
 
 
-def _get_formatter(fmt: str):
-    formatters = {
-        "stylish": format_diff,
-        "plain": format_diff_plain,
-        "json": format_diff_json,
-    }
-    return formatters.get(fmt)
-
-
-def _process_added_keys(file1: Dict, file2: Dict) -> Dict:
+def _process_keys(keys: List, data: Dict, status: str) -> Dict:
     diffs = {}
-    added_keys = list(file2.keys() - file1.keys())
-    for key in added_keys:
+    for key in keys:
         diffs[key] = {
-            "status": ADDED,
-            "diff": file2.get(key),
+            "status": status,
+            "diff": data.get(key),
         }
     return diffs
 
 
-def _process_removed_keys(file1: Dict, file2: Dict) -> Dict:
-    diffs = {}
-    added_keys = list(file1.keys() - file2.keys())
-    for key in added_keys:
-        diffs[key] = {
-            "status": REMOVED,
-            "diff": file1.get(key),
-        }
-    return diffs
-
-
-def _check_diffs(file1: Dict, file2: Dict) -> Dict:
+def _generate_diffs(data1: Dict, data2: Dict) -> Dict:
     diffs = {}
 
-    diffs.update(_process_added_keys(file1, file2))
-    diffs.update(_process_removed_keys(file1, file2))
+    added_keys = list(data2.keys() - data1.keys())
+    removed_keys = list(data1.keys() - data2.keys())
+    common_keys = list(data1.keys() & data2.keys())
 
-    common_keys = list(file1.keys() & file2.keys())
+    diffs.update(_process_keys(added_keys, data2, ADDED))
+    diffs.update(_process_keys(removed_keys, data1, REMOVED))
 
     for key in common_keys:
-        value1 = file1.get(key)
-        value2 = file2.get(key)
+        value1 = data1.get(key)
+        value2 = data2.get(key)
         if isinstance(value1, Dict) and isinstance(value2, Dict):
             diffs[key] = {
                 "status": NESTED,
-                "diff": _check_diffs(value1, value2),
+                "diff": _generate_diffs(value1, value2),
             }
         elif value1 == value2:
             diffs[key] = {
@@ -72,11 +51,11 @@ def _check_diffs(file1: Dict, file2: Dict) -> Dict:
 
 
 def generate_diff(file_path1: str, file_path2: str, formatter="stylish") -> str:
-    file1 = parse_file(file_path1)
-    file2 = parse_file(file_path2)
+    data1 = parse_file(file_path1)
+    data2 = parse_file(file_path2)
 
-    format_diffs = _get_formatter(formatter)
+    format_diffs = get_formatter(formatter)
 
-    diffs = _check_diffs(file1, file2)
+    diffs = _generate_diffs(data1, data2)
 
     return format_diffs(diffs)
