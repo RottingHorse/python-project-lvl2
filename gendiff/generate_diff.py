@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
-from gendiff.formatters.get_formatter import get_formatter
+from gendiff.formatters.formatter import formatter
 from gendiff.parsers.filereader import parse_file
 
 
@@ -50,11 +50,11 @@ def _generate_diffs(data1: Dict, data2: Dict) -> Dict:
     return diffs
 
 
-def generate_diff(file_path1: str, file_path2: str, formatter="stylish") -> str:
+def generate_diff(file_path1: str, file_path2: str, format_="stylish") -> str:
     data1 = parse_file(file_path1)
     data2 = parse_file(file_path2)
 
-    format_diffs = get_formatter(formatter)
+    format_diffs = formatter(format_)
 
     diffs = _generate_diffs(data1, data2)
 
