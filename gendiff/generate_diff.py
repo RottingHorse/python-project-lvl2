@@ -1,8 +1,9 @@
+from collections import OrderedDict
 from typing import Dict, List
 
 from gendiff.constants import ADDED, CHANGED, NESTED, REMOVED, UNCHANGED
 from gendiff.formatters.formatter import formatter
-from gendiff.parsers.filereader import parse_file
+from gendiff.parser import parse
 
 
 def _process_keys(keys: List, data: Dict, status: str) -> Dict:
@@ -47,12 +48,18 @@ def _generate_diffs(data1: Dict, data2: Dict) -> Dict:
                 },
             }
 
-    return diffs
+    return OrderedDict(sorted(diffs.items()))
+
+
+def _parse_file(file_path: str):
+    fmt = file_path.split(".")[-1]
+    data = open(file_path)
+    return parse(data, fmt)
 
 
 def generate_diff(file_path1: str, file_path2: str, format_="stylish") -> str:
-    data1 = parse_file(file_path1)
-    data2 = parse_file(file_path2)
+    data1 = _parse_file(file_path1)
+    data2 = _parse_file(file_path2)
 
     format_diffs = formatter(format_)
 
