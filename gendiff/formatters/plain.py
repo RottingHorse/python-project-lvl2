@@ -21,28 +21,28 @@ def _to_str(value):
     return value
 
 
-def _format(diff_dict, parent):
-    strings = []
+def _format_plain_nested(diff_dict, parent):
+    lines = []
 
     for key, diffs in diff_dict.items():
         prop_name = parent + f".{key}" if parent else f"{key}"
         status = diffs.get("status")
         diff = diffs.get("diff")
         if status == NESTED:
-            strings.append(_format(diff, prop_name))
+            lines.append(_format_plain_nested(diff, prop_name))
         elif status == CHANGED:
             old_value = diff.get("old_value")
             new_value = diff.get("new_value")
-            strings.append(
+            lines.append(
                 DIFF_STRINGS[status].format(n=prop_name, o_v=_to_str(old_value),
                                             n_v=_to_str(new_value)))
         elif status == ADDED:
-            strings.append(
+            lines.append(
                 DIFF_STRINGS[status].format(n=prop_name, v=_to_str(diff)))
         elif status == REMOVED:
-            strings.append(DIFF_STRINGS[status].format(n=prop_name))
-    return "\n".join(strings)
+            lines.append(DIFF_STRINGS[status].format(n=prop_name))
+    return "\n".join(lines)
 
 
-def format_(diff_dict: Dict) -> str:
-    return _format(diff_dict, parent='')
+def format_plain(diff_dict: Dict) -> str:
+    return _format_plain_nested(diff_dict, parent='')
